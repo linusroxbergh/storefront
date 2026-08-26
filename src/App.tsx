@@ -1,8 +1,27 @@
-export function App() {
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { ProductGrid } from './features/catalog/ProductGrid';
+
+function Layout() {
   return (
-    <main className="page">
-      <h1>Fernhill</h1>
-      <p>Opening soon.</p>
-    </main>
+    <>
+      <Header />
+      <main className="page">
+        <Outlet />
+      </main>
+      <Footer />
+    </>
   );
+}
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [{ path: '/', element: <ProductGrid /> }],
+  },
+]);
+
+export function App() {
+  return <RouterProvider router={router} />;
 }
