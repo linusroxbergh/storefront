@@ -1,24 +1,31 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { CartDrawer } from './features/cart/CartDrawer';
+import { CartProvider } from './features/cart/CartProvider';
 import { ProductGrid } from './features/catalog/ProductGrid';
+import { ProductPage } from './features/catalog/ProductPage';
 
 function Layout() {
   return (
-    <>
+    <CartProvider>
       <Header />
       <main className="page">
         <Outlet />
       </main>
       <Footer />
-    </>
+      <CartDrawer />
+    </CartProvider>
   );
 }
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    children: [{ path: '/', element: <ProductGrid /> }],
+    children: [
+      { path: '/', element: <ProductGrid /> },
+      { path: '/products/:slug', element: <ProductPage /> },
+    ],
   },
 ]);
 
