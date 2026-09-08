@@ -5,6 +5,7 @@ import { CartDrawer } from './features/cart/CartDrawer';
 import { CartProvider } from './features/cart/CartProvider';
 import { ProductGrid } from './features/catalog/ProductGrid';
 import { ProductPage } from './features/catalog/ProductPage';
+import { CheckoutPage } from './features/checkout/CheckoutPage';
 
 function Layout() {
   return (
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <ProductGrid /> },
       { path: '/products/:slug', element: <ProductPage /> },
+      { path: '/checkout', element: <CheckoutPage /> },
     ],
   },
 ]);
