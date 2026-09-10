@@ -6,6 +6,7 @@ import { CartProvider } from './features/cart/CartProvider';
 import { ProductGrid } from './features/catalog/ProductGrid';
 import { ProductPage } from './features/catalog/ProductPage';
 import { CheckoutPage } from './features/checkout/CheckoutPage';
+import { OrderConfirmation } from './features/checkout/OrderConfirmation';
 
 function Layout() {
   return (
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: '/', element: <ProductGrid /> },
       { path: '/products/:slug', element: <ProductPage /> },
       { path: '/checkout', element: <CheckoutPage /> },
+      { path: '/orders/:id', element: <OrderConfirmation /> },
     ],
   },
 ]);
