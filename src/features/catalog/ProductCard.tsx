@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
-import type { Product } from '../../data/products';
+import { isNew, type Product } from '../../data/products';
+import { flags } from '../../lib/flags';
 import { formatMoney } from '../../lib/money';
 
 export function ProductCard({ product }: { product: Product }) {
@@ -12,7 +13,11 @@ export function ProductCard({ product }: { product: Product }) {
         <span>{product.name}</span>
         <span className="card-price">{formatMoney(product.price)}</span>
       </div>
-      {product.stock === 0 && <span className="badge">Sold out</span>}
+      {product.stock === 0 ? (
+        <span className="badge">Sold out</span>
+      ) : (
+        flags.newBadges && isNew(product) && <span className="badge new">New</span>
+      )}
     </Link>
   );
 }

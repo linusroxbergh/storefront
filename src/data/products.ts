@@ -134,3 +134,9 @@ export function getProduct(id: string): Product {
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
+
+const NEW_FOR_MS = 30 * 24 * 60 * 60 * 1000;
+
+export function isNew(product: Product, now = Date.now()): boolean {
+  return now - Date.parse(product.addedAt) < NEW_FOR_MS;
+}
