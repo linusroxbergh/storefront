@@ -1,10 +1,12 @@
 import { getProduct } from '../data/products';
+import { discountFor, type DiscountCode } from './discounts';
 import { sum } from './money';
 
 export type CartLine = { productId: string; qty: number };
 
 export type Totals = {
   subtotal: number;
+  discount: number;
   shipping: number;
   tax: number;
   total: number;
@@ -17,11 +19,12 @@ export function lineTotal(line: CartLine): number {
   return getProduct(line.productId).price * line.qty;
 }
 
-export function cartTotals(lines: CartLine[]): Totals {
+export function cartTotals(lines: CartLine[], code?: DiscountCode): Totals {
   const subtotal = sum(lines.map(lineTotal));
+  const discount = code ? discountFor(code, subtotal) : 0;
   const shipping = lines.length > 0 ? SHIPPING_FLAT : 0;
   const tax = Math.round(subtotal * TAX_RATE);
-  return { subtotal, shipping, tax, total: subtotal + shipping + tax };
+  return { subtotal, discount, shipping, tax, total: subtotal - discount + shipping + tax };
 }
 
 export function addLine(lines: CartLine[], productId: string, qty = 1): CartLine[] {
