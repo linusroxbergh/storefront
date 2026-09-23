@@ -120,3 +120,39 @@
 .button.wide {
   width: 100%;
 }
+
+.code-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.code-form input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.code-form .error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.code-applied {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 15px;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: underline;
+}
