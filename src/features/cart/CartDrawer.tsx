@@ -3,6 +3,7 @@ import { getProduct } from '../../data/products';
 import { lineTotal } from '../../lib/cart';
 import { formatMoney } from '../../lib/money';
 import { useCart } from './CartProvider';
+import { DiscountForm } from './DiscountForm';
 import { TotalsList } from './TotalsList';
 import './cart.css';
 
@@ -45,6 +46,7 @@ export function CartDrawer() {
                 );
               })}
             </ul>
+            <DiscountForm />
             <TotalsList totals={totals} />
             <Link to="/checkout" className="button wide" onClick={close}>
               Checkout

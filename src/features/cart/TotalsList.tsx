@@ -6,6 +6,12 @@ export function TotalsList({ totals }: { totals: Totals }) {
     <dl className="totals">
       <dt>Subtotal</dt>
       <dd>{formatMoney(totals.subtotal)}</dd>
+      {totals.discount > 0 && (
+        <>
+          <dt>Discount</dt>
+          <dd>−{formatMoney(totals.discount)}</dd>
+        </>
+      )}
       <dt>Shipping</dt>
       <dd>{formatMoney(totals.shipping)}</dd>
       <dt>Tax</dt>

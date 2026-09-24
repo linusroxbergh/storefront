@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { addLine, cartTotals, setQty } from './cart';
+import { findCode } from './discounts';
 
 const MUG = 'FH-101';
 
@@ -21,10 +22,14 @@ describe('setQty', () => {
 
 describe('cartTotals', () => {
   it('is all zero for an empty cart', () => {
-    expect(cartTotals([])).toEqual({ subtotal: 0, shipping: 0, tax: 0, total: 0 });
+    expect(cartTotals([])).toEqual({ subtotal: 0, discount: 0, shipping: 0, tax: 0, total: 0 });
   });
 
   it('adds flat shipping and tax', () => {
-    expect(cartTotals([{ productId: MUG, qty: 2 }])).toEqual({ subtotal: 4800, shipping: 695, tax: 384, total: 5879 });
+    expect(cartTotals([{ productId: MUG, qty: 2 }])).toEqual({ subtotal: 4800, discount: 0, shipping: 695, tax: 384, total: 5879 });
+  });
+
+  it('takes a discount code off the subtotal', () => {
+    expect(cartTotals([{ productId: MUG, qty: 2 }], findCode('SAVE15')).discount).toBe(720);
   });
 });
