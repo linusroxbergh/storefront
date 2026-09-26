@@ -20,6 +20,7 @@ The app runs on http://localhost:5173. Start payments-api on port 8787 too, or o
 | `pnpm dev` | Dev server with hot reload |
 | `pnpm test` | Unit tests (Vitest) |
 | `pnpm typecheck` | TypeScript, no emit |
+| `pnpm e2e` | Playwright against a production build |
 | `pnpm build` | Production build in `dist/` |
 
 ## Feature flags
