@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useReducer, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { addLine, cartTotals, setQty, type CartLine, type Totals } from '../../lib/cart';
 import type { DiscountCode } from '../../lib/discounts';
 
@@ -46,8 +46,21 @@ type Cart = State & {
 
 const CartContext = createContext<Cart | null>(null);
 
+const STORAGE_KEY = 'fernhill.cart';
+
+function load(): State {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return { lines: [], isOpen: false };
+  const { lines, code } = JSON.parse(saved) as Pick<State, 'lines' | 'code'>;
+  return { lines, code, isOpen: false };
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, { lines: [], isOpen: false });
+  const [state, dispatch] = useReducer(reducer, undefined, load);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ lines: state.lines, code: state.code }));
+  }, [state.lines, state.code]);
 
   const cart = useMemo<Cart>(
     () => ({
