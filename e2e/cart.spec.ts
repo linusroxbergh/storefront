@@ -31,3 +31,11 @@ test('rejects an unknown code', async ({ page }) => {
   await drawer.getByRole('button', { name: 'Apply' }).click();
   await expect(drawer.getByText("That code doesn't exist or has expired.")).toBeVisible();
 });
+
+test('finds a product from the header search', async ({ page }) => {
+  await page.goto('/');
+  await page.getByPlaceholder('Search the shop').fill('Mug');
+
+  await expect(page.getByRole('heading', { name: 'Results for “Mug”' })).toBeVisible();
+  await expect(page.locator('.grid li')).toHaveCount(1);
+});
