@@ -29,6 +29,15 @@ describe('cartTotals', () => {
     expect(cartTotals([{ productId: MUG, qty: 2 }])).toEqual({ subtotal: 4800, discount: 0, shipping: 695, tax: 384, total: 5879 });
   });
 
+  it('ships free on bigger orders', () => {
+    const woolThrow = { productId: 'FH-104', qty: 1 };
+    expect(cartTotals([woolThrow]).shipping).toBe(0);
+  });
+
+  it('still charges shipping below the threshold', () => {
+    expect(cartTotals([{ productId: MUG, qty: 3 }]).shipping).toBe(695);
+  });
+
   it('takes a discount code off the subtotal', () => {
     expect(cartTotals([{ productId: MUG, qty: 2 }], findCode('SAVE15')).discount).toBe(720);
   });
