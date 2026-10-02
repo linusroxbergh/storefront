@@ -31,3 +31,11 @@ test('rejects an unknown code', async ({ page }) => {
   await drawer.getByRole('button', { name: 'Apply' }).click();
   await expect(drawer.getByText("That code doesn't exist or has expired.")).toBeVisible();
 });
+
+test('keeps the cart across a reload', async ({ page }) => {
+  await page.goto('/products/stoneware-mug');
+  await page.getByRole('button', { name: 'Add to cart' }).click();
+  await page.reload();
+
+  await expect(page.locator('.cart-button .count')).toHaveText('1');
+});
