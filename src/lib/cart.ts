@@ -14,6 +14,7 @@ export type Totals = {
 
 export const TAX_RATE = 0.08;
 export const SHIPPING_FLAT = 695;
+export const FREE_SHIPPING_FROM = 7500;
 
 export function lineTotal(line: CartLine): number {
   return getProduct(line.productId).price * line.qty;
@@ -22,7 +23,7 @@ export function lineTotal(line: CartLine): number {
 export function cartTotals(lines: CartLine[], code?: DiscountCode): Totals {
   const subtotal = sum(lines.map(lineTotal));
   const discount = code ? discountFor(code, subtotal) : 0;
-  const shipping = lines.length > 0 ? SHIPPING_FLAT : 0;
+  const shipping = lines.length === 0 || subtotal > FREE_SHIPPING_FROM ? 0 : SHIPPING_FLAT;
   const tax = Math.round(subtotal * TAX_RATE);
   return { subtotal, discount, shipping, tax, total: subtotal - discount + shipping + tax };
 }

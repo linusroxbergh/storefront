@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { getProduct } from '../../data/products';
-import { lineTotal } from '../../lib/cart';
+import { FREE_SHIPPING_FROM, lineTotal } from '../../lib/cart';
 import { formatMoney } from '../../lib/money';
 import { useCart } from './CartProvider';
 import { DiscountForm } from './DiscountForm';
@@ -48,6 +48,9 @@ export function CartDrawer() {
             </ul>
             <DiscountForm />
             <TotalsList totals={totals} />
+            {totals.shipping > 0 && (
+              <p className="shipping-hint">Add {formatMoney(FREE_SHIPPING_FROM - totals.subtotal)} more for free shipping.</p>
+            )}
             <Link to="/checkout" className="button wide" onClick={close}>
               Checkout
             </Link>
